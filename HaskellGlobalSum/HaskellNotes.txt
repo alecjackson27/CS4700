@@ -1,0 +1,34 @@
+Just writing down notes that might be helpful for presentation in here
+
+In Haskell, like most purely functional languages, data is immutable. Here is an example 
+from the Haskell interpreter that seems to contradict the "data is immutable" aspect of 
+Haskell, but actually doesn't:
+
+Prelude> let a = 3
+Prelude> a
+3
+Prelude> a = 5
+Prelude> a
+5
+
+This seems like we have changed data, but we haven't. What has actually happened is a 
+new definition has been created which is also named a. The difference can be seen with 
+this example from the Haskell interpreter:
+
+Prelude> let b = 99
+Prelude> f x = b * x
+Prelude> b = 100
+Prelude> b
+100
+Prelude> f 2
+198
+
+The reference to b in the function f still refers to the original instance of b, which 
+cannot be changed. Here's another example of immutable data with a list:
+
+Prelude> lst = [1, 2, 3]
+Prelude> lst !! 1 = 7
+Prelude> lst
+[1,2,3]
+
+Even though we set the value at index 1 of lst to equal 7, it still equals 2
