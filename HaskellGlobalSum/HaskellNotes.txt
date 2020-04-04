@@ -32,3 +32,6 @@ Prelude> lst
 [1,2,3]
 
 Even though we set the value at index 1 of lst to equal 7, it still equals 2
+
+On Being Purely Functional:
+Haskell is a purely functional language and functions do not have side effects, which is the reason for its inherent parallelism (along with some other benefits). However, side effects re necessary for some basic progrmming tasks such as input output. To compensate for this, Haskell separates functions which are pure and functions which perform tasks such as input/output, allowing computations to be completely functionally pure, after which the non-pure functions can use the data returned by the pure functions for things like input/output and writingto/reading from files.
