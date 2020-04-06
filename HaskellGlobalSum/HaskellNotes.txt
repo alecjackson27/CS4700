@@ -40,3 +40,8 @@ Haskell is a purely functional language and functions do not have side effects, 
 One thing that is interesting about parallelism in Haskell is that the you simply need to identify
 which expressions can be evaluated in parallel and Haskell while compiling will make a determination
 as to whether the cost of evaluating an expresison in parallel is worth the parallel overhead.
+
+Haskell uses "lazy evaluaton" which means expressions aren't evaluated until they
+are needed. This allows Haskell to avoid wasting resources evaluating functions
+and other expressions which are never used and also allows for infinite lists such
+as [1..], as each element of the list is only evaluated which it is needed.
