@@ -12,8 +12,9 @@ Prelude> a
 5
 
 This seems like we have changed data, but we haven't. What has actually happened is a 
-new definition has been created which is also named a. The difference can be seen with 
-this example from the Haskell interpreter:
+new definition has been created which is also named a (and the original instance of a
+has been hidden from the scope of any code written after this). The difference can be seen
+with this example from the Haskell interpreter:
 
 Prelude> let b = 99
 Prelude> f x = b * x
@@ -34,4 +35,8 @@ Prelude> lst
 Even though we set the value at index 1 of lst to equal 7, it still equals 2
 
 On Being Purely Functional:
-Haskell is a purely functional language and functions do not have side effects, which is the reason for its inherent parallelism (along with some other benefits). However, side effects re necessary for some basic progrmming tasks such as input output. To compensate for this, Haskell separates functions which are pure and functions which perform tasks such as input/output, allowing computations to be completely functionally pure, after which the non-pure functions can use the data returned by the pure functions for things like input/output and writingto/reading from files.
+Haskell is a purely functional language and functions do not have side effects, which is the reason for its inherent parallelism (along with some other benefits). However, side effects re necessary for some basic progrmming tasks such as input output. To compensate for this, Haskell separates functions which are pure and functions which perform tasks such as input/output, allowing computations to be completely functionally pure, after which the non-pure functions can use the data returned by the pure functions for things like input/output and writingto/reading from files. One thing to note is that Lisp, while generally considered a functional language, is not purely functional like Haskell. It a language which both supports and encourages a functional styyle, but is actually possible to program in an imperative style in Lisp, side effects and all.
+
+One thing that is interesting about parallelism in Haskell is that the you simply need to identify
+which expressions can be evaluated in parallel and Haskell while compiling will make a determination
+as to whether the cost of evaluating an expresison in parallel is worth the parallel overhead.
