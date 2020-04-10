@@ -9,14 +9,14 @@ import GlobalSum
 -- Function to force entire generated list to be evaluated immediately, rather than
 -- through lazy evaluation. This will allow the main script to only measure the algorithm
 -- time, rather than the time to evaluate the list and run the algorithm.
-force :: [a] -> ()
-force xs = go xs `pseq` ()
+forceEval :: [a] -> ()
+forceEval xs = go xs `pseq` ()
     where go (_:xs) = go xs
           go [] = 1
 
 -- Function to generate random numbers to be summed
 genRands :: Int -> StdGen -> [Int]
-genRands n generator = force result `seq` result
+genRands n generator = forceEval result `seq` result
                 where
                     result = take n (randoms generator)
 
