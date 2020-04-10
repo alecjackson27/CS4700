@@ -28,6 +28,6 @@ parGlobalSumTest arr
     | length arr == 1 = arr !! 0
     | otherwise = upper `par` (lower `pseq` (lower + upper))
         where
-            lower = parGlobalSum (fst split)
-            upper = parGlobalSum (snd split)
+            lower = parGlobalSumTest (fst split)
+            upper = parGlobalSumTest (snd split)
             split = splitAt (length arr `div` 2) arr
