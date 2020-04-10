@@ -7,7 +7,7 @@ import Control.Parallel (par, pseq)
 import GlobalSum
 
 -- Function to force entire generated list to be evaluated immediately, rather than
--- through lazy evaluation. This will the main script to only measure the algorithm
+-- through lazy evaluation. This will allow the main script to only measure the algorithm
 -- time, rather than the time to evaluate the list and run the algorithm.
 force :: [a] -> ()
 force xs = go xs `pseq` ()
