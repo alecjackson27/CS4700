@@ -4,29 +4,26 @@ import Data.Time.Clock (diffUTCTime, getCurrentTime)
 import System.Environment (getArgs)
 import System.Random (StdGen, getStdGen, randoms)
 import Control.Parallel (par, pseq)
-
 import GlobalSum
 
--- testFunction = globalSum
-testFunction = parGlobalSum
 
 force :: [a] -> ()
 force xs = go xs `pseq` ()
     where go (_:xs) = go xs
           go [] = 1
 
-randomInts :: Int -> StdGen -> [Int]
-randomInts k g = let result = take k (randoms g)
-                 in force result `seq` result
+genRands :: Int -> StdGen -> [Int]
+genRands n generator = force result `seq` result
+                where
+                    result =take n (randoms generator)
 
 main = do
-  args <- getArgs
-  let count | null args = 50000
-            | otherwise = read (head args)
-  input <- randomInts count `fmap` getStdGen
-  putStrLn $ "We have " ++ show (length input) ++ " elements to sum."
-  start <- getCurrentTime
-  let summation = testFunction input
-  putStrLn $ "Sum is " ++ show (summation)
-  end <- getCurrentTime
-  putStrLn $ show (end `diffUTCTime` start) ++ " elapsed."
+    args <- getArgs
+    let count = read (head args)
+    lst <- genRands count `fmap` getStdGen
+    putStrLn $ "Computing global sum of " ++ show count ++ " numbers..."
+    start <- getCurrentTime
+    let summation = parGlobalSum lst
+    putStrLn $ "Sum is " ++ show (summation)
+    end <- getCurrentTime
+    putStrLn $ "Computation took " ++ show (end `diffUTCTime` start) ++ " seconds."
