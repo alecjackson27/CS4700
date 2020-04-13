@@ -45,3 +45,5 @@ Haskell uses "lazy evaluaton" which means expressions aren't evaluated until the
 are needed. This allows Haskell to avoid wasting resources evaluating functions
 and other expressions which are never used and also allows for infinite lists such
 as [1..], as each element of the list is only evaluated which it is needed.
+
+Even though parallelism is easier to implement in Haskell (and in other purely functional languages), it doesn't necessarily perform better than parallel algorithms implemented in imperative/object-oriented languages. In fact, for the parallel algorithms we implemented, the algorithms perform slower on my machine when run on 4 cores compared to when run on 1 core. This is possibly because running the code in parallel on 4 cores doesn't make up for the overhead the Glasglow Haskell Compiler incurs when managing parallelism, so it is entirely possible that if we could run the algorithms on a cluster computer with many cores that the parallel version would be faster.
