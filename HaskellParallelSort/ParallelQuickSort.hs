@@ -1,6 +1,7 @@
 module Main where
 
 import Prelude
+import System.Environment (getArgs)
 import Data.List
 import Data.Time.Clock
 import System.CPUTime
@@ -10,35 +11,41 @@ import Control.Exception (evaluate)
 import Control.DeepSeq (rnf)
 import Text.Printf
 
+forceEval :: [a] -> ()
+forceEval xs = go xs `pseq` ()
+    where go (_:xs) = go xs
+          go [] = 1
+
 quickSort [] = []
-quickSort (x:xs) = small `par` (big `par` ((quickSort small) ⊕ [x] ⊕
-(quickSort big)))
-       where
-           small = [p | p ←  xs, p ≤ x]
-           big = [p | p ←  xs, p > x]
+quickSort (x:xs) = small `par` (big `par` 
+    (small ++ [x] ++ big))
+    where
+        small = quickSort [p | p <-  xs, p <= x]
+        big = quickSort [p | p <- xs, p > x]
 
-randomlist :: Int →  StdGen →  [Int]
-randomlist n = take n∘unfoldr (Just∘random)
-
-len = 10 ↑ 6
+randomlist :: Int -> StdGen -> [Int]
+randomlist n generator = forceEval result `seq` result
+                where
+                    result = take n (randoms generator)
 
 time = do
-    t ←  getCurrentTime
-    c ←  getCPUTime
+    t <-  getCurrentTime
+    c <-  getCPUTime
     return (t,c)
 
 measure f p = do
-   (t1, c1) ←  time
+   (t1, c1) <-  time
    evaluate $ rnf $ f p
-   (t2, c2) ←  time
+   (t2, c2) <-  time
    return (diffUTCTime t2 t1, c2 - c1)
 
 main = do
-   seed  ←  newStdGen
-   let rs = randomlist len seed
+    args <- getArgs
+    let len = read (head args)
+    seed  <- newStdGen
+    let rs = randomlist len seed
 
-   printf "Sorting %d elements...\n" len
+    printf "Sorting %d elements...\n" len
 
-
-   (t, cpu) ←  measure quickSort rs
-   printf "CPU Time: %dλnTime elapsed: %sλn" cpu (show t)
+    (t, cpu) <-  measure quickSort rs
+    printf "CPU Time: %d\nTime elapsed: %s\n" cpu (show t)
