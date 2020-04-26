@@ -1,0 +1,30 @@
+Array of size 100:
+	1 thread : 0.014 sec
+	2 threads: 0.009 sec
+	3 threads: 0.005 sec
+	4 threads: 0.004 sec
+
+Array of size 1000:
+	1 thread : 0.017 sec
+	2 threads: 0.011 sec
+	3 threads: 0.006 sec
+	4 threads: 0.005 sec
+
+Array of size 10000:
+	1 thread : 0.025 sec
+	2 threads: 0.017 sec
+	3 threads: 0.011 sec
+	4 threads: 0.012 sec
+
+Array of size 100000:
+	1 thread : 0.139 sec
+	2 threads: 0.082 sec
+	3 threads: 0.066 sec
+	4 threads: 0.071 sec
+
+Array of size 1000000:
+	1 thread : 0.812 sec
+	2 threads: 0.513 sec
+	3 threads: 0.249 sec
+	4 threads: 0.323 sec
+	
