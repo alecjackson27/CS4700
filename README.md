@@ -1,0 +1,2 @@
+# Exploration of Parallelism in Haskell
+The main report is in Report.pdf. The code for the Haskell and C++ quicksorts can be found in HaskellParallelSort and MPIQuickSort respectively. The code for the Haskell and C++ global sums can be found in HaskellGlobalSum and MPIGlobalSum respectively.
