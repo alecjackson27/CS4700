@@ -8,7 +8,7 @@ import System.CPUTime
 import System.Random
 import Control.Parallel
 import Control.Exception (evaluate)
-import Control.DeepSeq (rnf)
+import Control.DeepSeq (rnf, deepseq)
 import Text.Printf
 
 forceEval :: [a] -> ()
@@ -43,9 +43,15 @@ main = do
     args <- getArgs
     let len = read (head args)
     seed  <- newStdGen
-    let rs = randomlist len seed
+    let rs = randomlist (len * 10) seed
 
-    printf "Sorting %d elements...\n" len
+    printf "Sorting %d elements 10 times...\n" len
 
-    (t, cpu) <-  measure quickSort rs
-    printf "CPU Time: %d\nTime elapsed: %s\n" cpu (show t)
+    start <- getCurrentTime
+    let listOfSortedLists = [quickSort (take len (drop (x * len) rs)) `deepseq` x + x| x <-[0..9]]
+    -- Just need to print out the sums of x + x to force quickSort to be evaluated
+    -- The operation I used was arbitrary, the purpose was to makes sure the entirety
+    -- of the sorted list is evaluated, which is why I used deepseq
+    print  [listOfSortedLists !! i |  i <- [0..9]]
+    end <- getCurrentTime
+    printf "Average Time elapsed: %s\n" (show ((end `diffUTCTime` start) / 10))
