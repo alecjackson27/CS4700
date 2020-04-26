@@ -1,51 +1,66 @@
+#include <iostream>
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
+#include <time.h>
 #include <mpi.h>
+#include <ctime>
+#include <windows.h>
+using namespace std;
 
-int main(void){
-  int sum, comm_sz, my_rank, i, next, value;
-  int divisor = 2;
-  int core_difference = 1;
+const int MAX_CONTRIB = 10;
 
-  MPI_Init(NULL, NULL);
-  MPI_Comm_size(MPI_COMM_WORLD, &comm_sz);
-  MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
-  srandom((unsigned)time(NULL) + my_rank);
-  value = random() % 10;
+int Global_sum(int my_contrib, int my_rank, int p, MPI_Comm comm);
 
-      //process should recieve and add
-      if (my_rank % divisor == 0){
+int main(int argc, char* argv[]) {
+  int   p, my_rank;
+  MPI_Comm comm;
+  int   my_contrib;
+  int   sum;
 
-          printf("IF----");
+  MPI_Init(&argc, &argv);
+  comm = MPI_COMM_WORLD;
+  MPI_Comm_size(comm, &p);
+  MPI_Comm_rank(comm, &my_rank);
 
-          printf("Process %d generates: %d\n", my_rank, value);
+  srand((unsigned)time(NULL) + my_rank);
+  my_contrib = rand() % MAX_CONTRIB;
 
-          for (i = 0; i < comm_sz; i++)
-          {
-              MPI_Recv(&value, 1, MPI_INT, i, my_rank , MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-               sum += value;  
-               printf("Current Sum=: %d\n", sum);
-
-          }
-
-          printf("The NEW divisor is:%d\n", divisor);
-          divisor *= 2;
-          core_difference *= 2;
-
-      }
-
-      //sending the random value - no calculation
-      else if (my_rank % divisor == core_difference){
-          printf("ELSE----");
-          printf("Process %d generates: %d\n", my_rank, value);
-          MPI_Send(&value, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
-      }
-      else
-         if (my_rank==0)
-            printf("Sum=: %d\n", sum);
+  if (my_rank == 0) {
+    clock_t start = clock();
+    double duration;
+    // printf("Proc %d: contribution = %d\n", my_rank, my_contrib);
+    sum = Global_sum(my_contrib, my_rank, p, comm);
+    // printf("Proc %d > global sum = %d\n", my_rank, sum);
+    duration = (clock()-start) / (double)CLOCKS_PER_SEC;
+    cout <<"Number of nodes: " << p << "\nGlobal sum: " << sum << "\nTime: " << duration << " seconds\n";
+  }
+  else {
+    // printf("Proc %d: contribution = %d\n", my_rank, my_contrib);
+    sum = Global_sum(my_contrib, my_rank, p, comm);
+  }
 
   MPI_Finalize();
-
   return 0;
+} 
+
+int Global_sum(int my_contrib, int my_rank, int p, MPI_Comm comm) {
+   int     sum = my_contrib;
+   int     temp;
+   int     partner;
+   int     done = 0;
+   unsigned  bitmask = 1;
+   MPI_Status status;
+
+   while (!done && bitmask < p) {
+     partner = my_rank ^ bitmask;
+     if (my_rank < partner) {
+      MPI_Recv(&temp, 1, MPI_INT, partner, 0, comm, &status);
+      sum += temp;
+      bitmask <<= 1;
+     } else {
+      MPI_Send(&sum, 1, MPI_INT, partner, 0, comm); 
+      done = 1;
+     }
+   }
+   return sum;
 }
