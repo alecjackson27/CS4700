@@ -1,0 +1,99 @@
+using 1 cores:
+Sorting 100 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0005630004s
+
+using 2 cores:
+Sorting 100 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0001357715s
+
+using 3 cores:
+Sorting 100 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0001424741s
+
+using 4 cores:
+Sorting 100 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0007329674s
+
+using 1 cores:
+Sorting 1000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0012330746s
+
+using 2 cores:
+Sorting 1000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0013392974s
+
+using 3 cores:
+Sorting 1000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0012867784s
+
+using 4 cores:
+Sorting 1000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0020785929s
+
+using 1 cores:
+Sorting 10000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0163325699s
+
+using 2 cores:
+Sorting 10000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0174812603s
+
+using 3 cores:
+Sorting 10000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0232650633s
+
+using 4 cores:
+Sorting 10000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.0276706885s
+
+using 1 cores:
+Sorting 100000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.2047874787s
+
+using 2 cores:
+Sorting 100000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.2118689398s
+
+using 3 cores:
+Sorting 100000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.2593819715s
+
+using 4 cores:
+Sorting 100000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 0.3190316348s
+
+using 1 cores:
+Sorting 1000000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 2.5719677302s
+
+using 2 cores:
+Sorting 1000000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 2.4920810364s
+
+using 3 cores:
+Sorting 1000000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 3.3937466416s
+
+using 4 cores:
+Sorting 1000000 elements 10 times...
+[0,2,4,6,8,10,12,14,16,18]
+Average Time elapsed: 3.9916126198s

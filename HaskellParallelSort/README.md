@@ -1,0 +1,2 @@
+# Build Instructions
+I've been compiling this on my linux system with "ghc -threaded -O2 --make ParallelQuickSort" and then running it with "./ParallelQuickSort +RTS -N4 -RTS 50000" where the last arg is the amount of numbers to be summed (so if I wanted to sum 70 numbers I would run it with "./ParallelQuickSort +RTS -N4 -RTS 70" for instance). the argument "-N4" specifies that the processing should be spread out over 4 processors, which is the total number of processors I have on my computer.
